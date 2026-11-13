@@ -8,6 +8,7 @@ import { LandingPage } from "./pages/Landing";
 import { MessagesPage } from "./pages/MessagesPage";
 import { AdminDashboardPage } from "./pages/AdminPages";
 import { PrivacyPolicyPage, TermsPage, ContactPage } from "./pages/LegalPages";
+import { AppErrorPage, NotFoundPage } from "./pages/ErrorPages";
 import type { ReactNode } from "react";
 
 function Gate({ role, children, onboarding = false }: { role?: "BRAND" | "CREATOR" | "ADMIN"; children: ReactNode; onboarding?: boolean }) {
@@ -59,7 +60,8 @@ export function App() {
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/terms-and-conditions" element={<TermsPage />} />
       <Route path="/contact" element={<ContactPage />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/error" element={<AppErrorPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

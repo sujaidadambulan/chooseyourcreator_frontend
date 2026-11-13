@@ -3,7 +3,8 @@ import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "rea
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Field, Logo, Notice, TextInput } from "../components/ui";
 import { Reveal } from "../components/motion";
-import { api, apiUrl } from "../lib/api";
+import { api, apiUrl, ApiError } from "../lib/api";
+import { consumeUrlError, formatApiError } from "../lib/errors";
 import { chosenRole, destinationFor, popOAuthError, useAuth, type SessionUser } from "../lib/auth";
 
 function AuthFrame({ title, subtitle, children }: { title: string; subtitle?: string; children: ReactNode }) {
@@ -96,7 +97,7 @@ function ResendButton({ onResend, disabled }: { onResend: () => Promise<void>; d
       await onResend();
       setCountdown(60);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not resend");
+      setError(formatApiError(err));
     } finally {
       setSending(false);
     }
@@ -104,7 +105,7 @@ function ResendButton({ onResend, disabled }: { onResend: () => Promise<void>; d
 
   return (
     <div className="text-center space-y-1">
-      {error && <Notice message={error} />}
+      {error && <Notice message={error} variant="error" title="Could not resend" />}
       {countdown > 0 ? (
         <p className="text-sm text-muted">
           Resend code in <span className="font-semibold text-ink">{countdown}s</span>
@@ -176,7 +177,7 @@ function SignupOtpScreen({
         </div>
       </div>
       <form className="space-y-5" onSubmit={(e) => void handleVerify(e)}>
-        <Notice message={error} />
+        <Notice message={error} variant="error" />
         <OtpInput value={code} onChange={setCode} disabled={verifying} />
         <Button className="w-full" type="submit" disabled={verifying || code.length < 6}>
           {verifying ? "Verifying…" : "Verify email"}
@@ -264,7 +265,7 @@ function ResetOtpScreen({ email, onBack }: { email: string; onBack: () => void }
     return (
       <AuthFrame title="Create new password" subtitle="Enter your new password below">
         <form className="space-y-4" onSubmit={(e) => void handleResetPassword(e)}>
-          <Notice message={error} />
+          <Notice message={error} variant="error" />
           <div>
             <Field label="New password">
               <div className="relative">
@@ -322,7 +323,7 @@ function ResetOtpScreen({ email, onBack }: { email: string; onBack: () => void }
         </div>
       </div>
       <form className="space-y-5" onSubmit={(e) => void handleVerifyOtp(e)}>
-        <Notice message={error} />
+        <Notice message={error} variant="error" />
         <OtpInput value={code} onChange={setCode} disabled={verifying} />
         <Button className="w-full" type="submit" disabled={verifying || code.length < 6}>
           {verifying ? "Verifying…" : "Verify code"}
@@ -377,7 +378,7 @@ export function RolePage() {
       </Link>
       <Reveal>
         <p className="mt-10 text-center text-lg text-muted">Choose how you want to get started.</p>
-        {error ? <div className="mt-4 w-full"><Notice message={error} /></div> : null}
+        {error ? <div className="mt-4 w-full"><Notice message={error} variant="error" /></div> : null}
         <div className="mt-10 grid w-full gap-5 md:grid-cols-2">
           <article className="interactive-surface rounded-3xl border border-line p-8 text-center">
             <UserRound className="mx-auto" strokeWidth={1.5} />
@@ -420,8 +421,10 @@ export function SignUpPage() {
   const role = chosenRole();
 
   useEffect(() => {
+    const urlErr = consumeUrlError();
     const oauthErr = popOAuthError();
-    if (oauthErr) setError(oauthErr);
+    if (urlErr) setError(urlErr);
+    else if (oauthErr) setError(oauthErr);
   }, []);
 
   const passwordError =
@@ -439,16 +442,29 @@ export function SignUpPage() {
       setError("Please enter a valid 10-digit phone number.");
       return;
     }
+    const normalizedEmail = email.trim().toLowerCase();
+    if (/@gmial\.com$/i.test(normalizedEmail)) {
+      setError("Did you mean gmail.com? Check your email spelling and try again.");
+      return;
+    }
     setError(null);
     setSubmitting(true);
     try {
       await api<{ ok: boolean; email: string }>("/api/auth/email/send-verification", {
         method: "POST",
-        body: JSON.stringify({ email: email.trim(), phone: phone.trim(), password, role }),
+        body: JSON.stringify({ email: normalizedEmail, phone: phone.trim(), password, role }),
       });
       setOtpSent(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not send verification email");
+      if (err instanceof ApiError && err.status === 409) {
+        setError(`${formatApiError(err)} Try signing in instead, or use a different email or phone number.`);
+      } else if (err instanceof ApiError && err.status === 500) {
+        setError(
+          "We couldn't send the verification email. Check the email address, try Google sign-in, or contact support if this continues.",
+        );
+      } else {
+        setError(formatApiError(err));
+      }
     } finally {
       setSubmitting(false);
     }
@@ -466,7 +482,7 @@ export function SignUpPage() {
   return (
     <AuthFrame title="Create your account">
       <form className="space-y-4" onSubmit={(event) => void submit(event)}>
-        <Notice message={error} />
+        <Notice message={error} variant="error" title="Sign up couldn't continue" />
         <Field label="Email">
           <TextInput
             type="email"
@@ -550,8 +566,10 @@ export function SignInPage() {
   const [resetSuccess, setResetSuccess] = useState(false);
 
   useEffect(() => {
+    const urlErr = consumeUrlError();
     const oauthErr = popOAuthError();
-    if (oauthErr) setError(oauthErr);
+    if (urlErr) setError(urlErr);
+    else if (oauthErr) setError(oauthErr);
     const params = new URLSearchParams(window.location.search);
     if (params.get("reset") === "1") setResetSuccess(true);
   }, []);
@@ -568,7 +586,7 @@ export function SignInPage() {
       setUser(data.user);
       navigate(destinationFor(data.user));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not sign in");
+      setError(formatApiError(err));
     }
   }
 
@@ -580,7 +598,7 @@ export function SignInPage() {
             ✅ Password updated successfully. Sign in with your new password.
           </div>
         )}
-        <Notice message={error} />
+        <Notice message={error} variant="error" title="Sign in failed" />
         <Field label="Email">
           <TextInput
             type="email"
@@ -652,7 +670,7 @@ export function ForgotPasswordPage() {
       subtitle="Enter your email and we'll send you a verification code"
     >
       <form className="space-y-4" onSubmit={(event) => void submit(event)}>
-        <Notice message={error} />
+        <Notice message={error} variant="error" />
         <Field label="Email">
           <TextInput
             type="email"
@@ -696,7 +714,7 @@ export function ResetPasswordPage() {
   return (
     <AuthFrame title="Choose a new password">
       <form className="space-y-4" onSubmit={(event) => void submit(event)}>
-        <Notice message={error} />
+        <Notice message={error} variant="error" />
         <div>
           <Field label="New password">
             <TextInput
@@ -765,7 +783,7 @@ export function PhonePage() {
 
   return (
     <AuthFrame title="Continue with phone">
-      <Notice message={error} />
+          <Notice message={error} variant="error" />
       {!sent ? (
         <form className="space-y-4" onSubmit={(event) => void send(event)}>
           <Field label="Mobile number">

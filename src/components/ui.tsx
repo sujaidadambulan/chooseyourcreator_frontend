@@ -142,9 +142,33 @@ export function Card({ children, className = "" }: { children: ReactNode; classN
   );
 }
 
-export function Notice({ message }: { message?: string | null }) {
+const noticeStyles = {
+  neutral: "border-line bg-soft text-ink",
+  error: "border-rose-200 bg-rose-50 text-rose-950",
+  success: "border-emerald-200 bg-emerald-50 text-emerald-950",
+  warning: "border-amber-200 bg-amber-50 text-amber-950",
+  info: "border-sky-200 bg-sky-50 text-sky-950",
+} as const;
+
+export function Notice({
+  message,
+  title,
+  variant = "neutral",
+}: {
+  message?: string | null;
+  title?: string;
+  variant?: keyof typeof noticeStyles;
+}) {
   if (!message) return null;
-  return <p className="rounded-2xl border border-line bg-soft px-4 py-3 text-sm">{message}</p>;
+  return (
+    <div
+      className={`rounded-2xl border px-4 py-3 text-sm ${noticeStyles[variant]}`}
+      role={variant === "error" || variant === "warning" ? "alert" : "status"}
+    >
+      {title ? <p className="mb-1 font-semibold">{title}</p> : null}
+      <p className="leading-relaxed">{message}</p>
+    </div>
+  );
 }
 
 export function Loader({ variant = "inline" }: { variant?: "inline" | "screen" }) {
@@ -184,10 +208,11 @@ export function EmptyState({ title, body, action }: { title: string; body?: stri
   );
 }
 
-export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
+export function ErrorState({ message, onRetry, title = "Something went wrong" }: { message: string; onRetry?: () => void; title?: string }) {
   return (
-    <div className="rounded-3xl border border-line px-6 py-16 text-center">
-      <p>{message}</p>
+    <div className="rounded-3xl border border-rose-200 bg-rose-50/50 px-6 py-16 text-center">
+      <p className="text-lg font-medium text-rose-950">{title}</p>
+      <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-rose-900/90">{message}</p>
       {onRetry ? (
         <Button className="mt-6" onClick={onRetry}>
           Try again
