@@ -18,6 +18,8 @@ export function formatApiError(err: unknown): string {
         return err.message || "Too many attempts. Please wait a moment and try again.";
       case 500:
         return err.message || "Something went wrong on our side. Please try again in a moment.";
+      case 503:
+        return err.message || "This feature is not available right now. Try email or Google sign-in.";
       default:
         return err.message || "Something went wrong. Please try again.";
     }

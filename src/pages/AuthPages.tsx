@@ -163,7 +163,7 @@ function SignupOtpScreen({
       setUser(data.user);
       navigate(destinationFor(data.user));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Verification failed");
+      setError(formatApiError(err));
     } finally {
       setVerifying(false);
     }
@@ -230,7 +230,7 @@ function ResetOtpScreen({ email, onBack }: { email: string; onBack: () => void }
       });
       setResetToken(data.resetToken);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Verification failed");
+      setError(formatApiError(err));
     } finally {
       setVerifying(false);
     }
@@ -255,7 +255,7 @@ function ResetOtpScreen({ email, onBack }: { email: string; onBack: () => void }
       });
       navigate("/sign-in?reset=1");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not reset password");
+      setError(formatApiError(err));
     } finally {
       setSubmittingReset(false);
     }
@@ -362,7 +362,7 @@ export function RolePage() {
         navigate(destinationFor(data.user));
         return;
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Failed to select role");
+        setError(formatApiError(err));
       } finally {
         setSubmitting(false);
       }
@@ -654,7 +654,7 @@ export function ForgotPasswordPage() {
       });
       setOtpSent(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not send reset code");
+      setError(formatApiError(err));
     } finally {
       setSending(false);
     }
@@ -707,7 +707,7 @@ export function ResetPasswordPage() {
       });
       navigate("/sign-in");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not reset the password");
+      setError(formatApiError(err));
     }
   }
 
@@ -761,7 +761,7 @@ export function PhonePage() {
       setSent(true);
       setDevCode(data.devCode ?? null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not send the code");
+      setError(formatApiError(err));
     }
   }
 
@@ -777,7 +777,7 @@ export function PhonePage() {
       setUser(data.user);
       navigate(destinationFor(data.user));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not verify the code");
+      setError(formatApiError(err));
     }
   }
 

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --port 5173 --strictPort",
     "typecheck": "tsc --noEmit",
-    "build": "vite build",
+    "build": "vite build && node ./scripts/copy-spa-fallbacks.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -44,14 +44,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    // Pick up OAuth token/error that the backend passes back as query params after Google sign-in redirect
+    // Legacy OAuth redirects with ?token= on deep paths (prefer /auth/callback)
     const params = new URLSearchParams(window.location.search);
+    if (window.location.pathname === "/auth/callback") {
+      void refresh();
+      return;
+    }
+
     const oauthToken = params.get("token");
     const oauthError = params.get("error");
 
     if (oauthToken) {
       sessionStorage.setItem("cyc_token", oauthToken);
-      // Clean the token from the URL without reloading the page
       params.delete("token");
       const newSearch = params.toString();
       const cleanUrl = window.location.pathname + (newSearch ? `?${newSearch}` : "") + window.location.hash;
@@ -59,7 +63,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     if (oauthError) {
-      // Store the error so auth pages can display it
       sessionStorage.setItem("cyc_oauth_error", decodeURIComponent(oauthError));
       params.delete("error");
       const newSearch = params.toString();

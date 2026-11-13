@@ -41,15 +41,18 @@ function ErrorShell({
 }
 
 export function NotFoundPage() {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+  const hadOAuthToken = search.includes("token=");
   return (
     <ErrorShell
-      code="404"
-      title="Page not found"
+      code="404 — Not Found"
+      title="This page doesn't exist"
       description={
-        pathname && pathname !== "/"
-          ? `We don't have a page at "${pathname}". It may have moved or the link is outdated.`
-          : "We couldn't find that page. It may have moved or the link is outdated."
+        hadOAuthToken
+          ? "Your sign-in link opened a URL the server couldn't load. Try signing in again from the home page — Google sign-in now returns through /auth/callback."
+          : pathname && pathname !== "/"
+            ? `There is no route for "${pathname}". Check the link or use the buttons below.`
+            : "That link doesn't match any page on ChooseYourCreator."
       }
       icon={<SearchX className="h-8 w-8" strokeWidth={1.5} />}
     >

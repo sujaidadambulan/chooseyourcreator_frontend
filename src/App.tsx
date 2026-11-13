@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Loader, Shell } from "./components/ui";
 import { destinationFor, useAuth } from "./lib/auth";
+import { AuthCallbackPage } from "./pages/AuthCallbackPage";
 import { ForgotPasswordPage, PhonePage, ResetPasswordPage, RolePage, SignInPage, SignUpPage } from "./pages/AuthPages";
 import { BrandCampaignDetail, BrandCampaigns, BrandHome, BrandOnboarding, BrandPayments, BrandProfilePage, CampaignForm, CreatorProfilePage, brandLinks } from "./pages/BrandPages";
 import { AgreementPage, CreatorCampaignDetail, CreatorHome, CreatorOnboarding, CreatorPayments, CreatorProfilePage as CreatorProfile, CreatorWork, CreatorWorkDetail, creatorLinks } from "./pages/CreatorPages";
@@ -33,6 +34,7 @@ export function App() {
       <Route path="/get-started" element={<RolePage />} />
       <Route path="/sign-up" element={<SignUpPage />} />
       <Route path="/sign-in" element={<SignInPage />} />
+      <Route path="/auth/callback" element={<AuthCallbackPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/phone" element={<PhonePage />} />
