@@ -374,6 +374,7 @@ export function AdminDashboardPage() {
           isVerified?: boolean;
           email?: string | null;
           phone?: string | null;
+          gpayUpi?: string | null;
         };
       }>(`/api/admin/creators/${creatorId}`);
       const c = data.creator;
@@ -396,6 +397,7 @@ export function AdminDashboardPage() {
           isVerified: c.isVerified,
           email: c.email,
           phone: c.phone,
+          gpayUpi: c.gpayUpi,
         },
       });
     } catch {
@@ -403,6 +405,20 @@ export function AdminDashboardPage() {
     } finally {
       setProfileLoading(false);
     }
+  }
+
+  function handleDeleteUser(u: AdminUser) {
+    const name = u.brandProfile?.companyName || u.creatorProfile?.name || u.email || "this user";
+    triggerConfirm(
+      "Delete account permanently",
+      `Delete ${name}? This removes their profile and cannot be undone. Campaign data tied to them may also be removed.`,
+      async () => {
+        await api(`/api/admin/users/${u.id}`, { method: "DELETE" });
+        await queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+        await queryClient.invalidateQueries({ queryKey: ["admin-overview"] });
+      },
+      "danger",
+    );
   }
 
   async function handleSignOut() {
@@ -797,17 +813,26 @@ export function AdminDashboardPage() {
                                   ) : null}
 
                                   {u.role !== "ADMIN" && (
-                                    <button
-                                      type="button"
-                                      onClick={() => handleToggleBlock(u)}
-                                      className={`rounded-lg px-2 py-1 text-[10px] font-medium transition-colors cursor-pointer border ${
-                                        isBlocked
-                                          ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
-                                          : "bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100"
-                                      }`}
-                                    >
-                                      {isBlocked ? "Unblock" : "Block"}
-                                    </button>
+                                    <>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleToggleBlock(u)}
+                                        className={`rounded-lg px-2 py-1 text-[10px] font-medium transition-colors cursor-pointer border ${
+                                          isBlocked
+                                            ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                                            : "bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100"
+                                        }`}
+                                      >
+                                        {isBlocked ? "Unblock" : "Block"}
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleDeleteUser(u)}
+                                        className="rounded-lg border border-rose-300 bg-white px-2 py-1 text-[10px] font-medium text-rose-800 hover:bg-rose-50"
+                                      >
+                                        Delete
+                                      </button>
+                                    </>
                                   )}
                                 </div>
                               </td>

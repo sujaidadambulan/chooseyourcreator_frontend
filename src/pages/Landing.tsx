@@ -2,6 +2,7 @@ import { ArrowRight, Menu, X } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Button, Logo } from "../components/ui";
+import { destinationFor, useAuth } from "../lib/auth";
 import { Footer } from "../components/Footer";
 import { Parallax, Reveal } from "../components/motion";
 import { BRAND } from "../shared";
@@ -93,6 +94,8 @@ const navLinkClass = "interactive-link text-muted hover:text-ink";
 
 export function LandingPage() {
   const [open, setOpen] = useState(false);
+  const { user, loading } = useAuth();
+  const dashboardPath = user ? destinationFor(user) : null;
   return (
     <div>
       <header className="sticky top-0 z-20 border-b border-line bg-white/90 backdrop-blur">
@@ -105,8 +108,14 @@ export function LandingPage() {
             <a href="#brands" className={navLinkClass}>For Brands</a>
             <a href="#creators" className={navLinkClass}>For Creators</a>
             <a href="#features" className={navLinkClass}>Features</a>
-            <Link to="/sign-in" className={navLinkClass}>Sign in</Link>
-            <Link to="/get-started"><Button>Get started</Button></Link>
+            {!loading && user && dashboardPath ? (
+              <Link to={dashboardPath}><Button>Go to dashboard</Button></Link>
+            ) : (
+              <>
+                <Link to="/sign-in" className={navLinkClass}>Sign in</Link>
+                <Link to="/get-started"><Button>Get started</Button></Link>
+              </>
+            )}
           </nav>
           <button
             type="button"
@@ -123,8 +132,14 @@ export function LandingPage() {
             <a href="#brands" onClick={() => setOpen(false)}>For Brands</a>
             <a href="#creators" onClick={() => setOpen(false)}>For Creators</a>
             <a href="#features" onClick={() => setOpen(false)}>Features</a>
-            <Link to="/sign-in" onClick={() => setOpen(false)}>Sign in</Link>
-            <Link to="/sign-up" onClick={() => setOpen(false)}>Sign up</Link>
+            {!loading && user && dashboardPath ? (
+              <Link to={dashboardPath} onClick={() => setOpen(false)}>Go to dashboard</Link>
+            ) : (
+              <>
+                <Link to="/sign-in" onClick={() => setOpen(false)}>Sign in</Link>
+                <Link to="/sign-up" onClick={() => setOpen(false)}>Sign up</Link>
+              </>
+            )}
           </div>
         ) : null}
       </header>

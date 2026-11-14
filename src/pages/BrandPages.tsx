@@ -2061,8 +2061,8 @@ export function BrandProfilePage() {
         </div>
 
         {/* Logo + Name row */}
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
             <div className="relative">
               <Avatar
                 name={profile.companyName}
@@ -2087,12 +2087,12 @@ export function BrandProfilePage() {
                 />
               </label>
             </div>
-            <div>
-              <h1 className="text-3xl font-medium">{profile.companyName}</h1>
-              <p className="text-muted">{profile.niche} · {profile.employeeSize} people · {profile.role}</p>
+            <div className="min-w-0">
+              <h1 className="text-2xl font-medium sm:text-3xl">{profile.companyName}</h1>
+              <p className="text-sm text-muted break-words">{profile.niche} · {profile.employeeSize} people · {profile.role}</p>
             </div>
           </div>
-          <Button variant="secondary" onClick={() => setEditing(true)}>Edit</Button>
+          <Button variant="secondary" className="shrink-0 self-start" onClick={() => setEditing(true)}>Edit</Button>
         </div>
 
         <Notice message={notice} />

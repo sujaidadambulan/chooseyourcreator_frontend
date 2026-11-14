@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Loader, Notice } from "../components/ui";
 import { api } from "../lib/api";
-import { destinationFor, type SessionUser } from "../lib/auth";
+import { destinationFor, persistAuthToken, type SessionUser, useAuth } from "../lib/auth";
 
 /** OAuth return URL — avoids server 404 on deep paths before the SPA loads. */
 export function AuthCallbackPage() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,11 +26,12 @@ export function AuthCallbackPage() {
       return;
     }
 
-    sessionStorage.setItem("cyc_token", token);
+    persistAuthToken(token);
 
     void (async () => {
       try {
         const data = await api<{ user: SessionUser }>("/api/auth/me");
+        setUser(data.user);
         const target =
           nextPath && nextPath.startsWith("/") && !nextPath.startsWith("//")
             ? nextPath

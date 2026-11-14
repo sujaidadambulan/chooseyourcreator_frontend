@@ -20,6 +20,22 @@ type AuthState = {
 
 const AuthContext = createContext<AuthState | null>(null);
 
+const AUTH_TOKEN_KEY = "cyc_token";
+
+export function persistAuthToken(token: string) {
+  try {
+    localStorage.setItem(AUTH_TOKEN_KEY, token);
+    sessionStorage.setItem(AUTH_TOKEN_KEY, token);
+  } catch {
+    sessionStorage.setItem(AUTH_TOKEN_KEY, token);
+  }
+}
+
+export function clearAuthToken() {
+  localStorage.removeItem(AUTH_TOKEN_KEY);
+  sessionStorage.removeItem(AUTH_TOKEN_KEY);
+}
+
 export function destinationFor(user: SessionUser) {
   if (user.role === "ADMIN") return "/admin";
   if (!user.role) return "/get-started";
@@ -36,8 +52,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data = await api<{ user: SessionUser }>("/api/auth/me");
       setUser(data.user);
     } catch (error) {
-      if (error instanceof ApiError && error.status === 401) setUser(null);
-      else setUser(null);
+      if (error instanceof ApiError && error.status === 401) {
+        clearAuthToken();
+        setUser(null);
+      }
     } finally {
       setLoading(false);
     }
@@ -47,7 +65,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Legacy OAuth redirects with ?token= on deep paths (prefer /auth/callback)
     const params = new URLSearchParams(window.location.search);
     if (window.location.pathname === "/auth/callback") {
-      void refresh();
+      setLoading(false);
       return;
     }
 
@@ -55,7 +73,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const oauthError = params.get("error");
 
     if (oauthToken) {
-      sessionStorage.setItem("cyc_token", oauthToken);
+      persistAuthToken(oauthToken);
       params.delete("token");
       const newSearch = params.toString();
       const cleanUrl = window.location.pathname + (newSearch ? `?${newSearch}` : "") + window.location.hash;

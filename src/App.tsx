@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { Loader, Shell } from "./components/ui";
 import { destinationFor, useAuth } from "./lib/auth";
 import { AuthCallbackPage } from "./pages/AuthCallbackPage";
-import { ForgotPasswordPage, PhonePage, ResetPasswordPage, RolePage, SignInPage, SignUpPage } from "./pages/AuthPages";
+import { ForgotPasswordPage, ResetPasswordPage, RolePage, SignInPage, SignUpPage } from "./pages/AuthPages";
 import { BrandCampaignDetail, BrandCampaigns, BrandHome, BrandOnboarding, BrandPayments, BrandProfilePage, CampaignForm, CreatorProfilePage, brandLinks } from "./pages/BrandPages";
 import { AgreementPage, CreatorCampaignDetail, CreatorHome, CreatorOnboarding, CreatorPayments, CreatorProfilePage as CreatorProfile, CreatorWork, CreatorWorkDetail, creatorLinks } from "./pages/CreatorPages";
 import { LandingPage } from "./pages/Landing";
@@ -37,7 +37,6 @@ export function App() {
       <Route path="/auth/callback" element={<AuthCallbackPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />
-      <Route path="/phone" element={<PhonePage />} />
       <Route path="/brand/onboarding" element={<Gate role="BRAND" onboarding><BrandOnboarding /></Gate>} />
       <Route path="/creator/onboarding" element={<Gate role="CREATOR" onboarding><CreatorOnboarding /></Gate>} />
       <Route path="/brand" element={<Gate role="BRAND"><Shell links={brandLinks}><BrandHome /></Shell></Gate>} />

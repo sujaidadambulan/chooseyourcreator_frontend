@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ButtonHTMLAttributes, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { api, apiUrl } from "../lib/api";
-import { useAuth } from "../lib/auth";
+import { clearAuthToken, useAuth } from "../lib/auth";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Footer } from "./Footer";
 import { BRAND } from "../shared";
@@ -469,8 +469,7 @@ export function Shell({ links, children }: { links: { to: string; label: string 
     } catch {
       // Ignore network errors on logout
     }
-    sessionStorage.removeItem("cyc_token");
-    localStorage.removeItem("cyc_token");
+    clearAuthToken();
     setUser(null);
     window.location.assign("/");
   }
@@ -510,7 +509,7 @@ export function Shell({ links, children }: { links: { to: string; label: string 
             <button className="rounded-full border border-line px-3 py-2 text-sm md:hidden" onClick={() => setOpen((value) => !value)}>
               Menu
             </button>
-            <Button variant="ghost" onClick={() => void signOut()}>
+            <Button variant="ghost" className="hidden md:inline-flex" onClick={() => void signOut()}>
               Sign out
             </Button>
           </div>
@@ -522,10 +521,20 @@ export function Shell({ links, children }: { links: { to: string; label: string 
                 {link.label}
               </NavLink>
             ))}
+            <button
+              type="button"
+              className="rounded-2xl px-3 py-2 text-left text-sm text-rose-700 hover:bg-rose-50"
+              onClick={() => {
+                setOpen(false);
+                void signOut();
+              }}
+            >
+              Sign out
+            </button>
           </div>
         ) : null}
       </header>
-      <main className="mx-auto max-w-6xl px-5 py-10">{children}</main>
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-5 sm:py-10">{children}</main>
       <Footer />
     </div>
   );

@@ -70,6 +70,7 @@ export type CreatorDetailView = {
   isVerified?: boolean;
   email?: string | null;
   phone?: string | null;
+  gpayUpi?: string | null;
 };
 
 export function VerifiedBadge({ isVerified, size = "md" }: { isVerified?: boolean; size?: "sm" | "md" }) {
@@ -413,12 +414,12 @@ export function ProfileDetailsModal({
           {/* Body */}
           <div className="min-h-0 flex-1 overflow-y-auto p-6 space-y-5 text-xs">
             {/* Admin-only contact info */}
-            {showPhoneInAdmin && (creator.phone || creator.email) && (
+            {showPhoneInAdmin && (creator.phone || creator.email || creator.gpayUpi) && (
               <div className="rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4 space-y-2">
                 <span className="font-semibold text-emerald-900 uppercase tracking-wider text-[11px]">
                   Contact Information (Admin Eyes Only)
                 </span>
-                <div className="grid grid-cols-2 gap-3 text-emerald-950 font-mono">
+                <div className="grid grid-cols-1 gap-3 text-emerald-950 font-mono sm:grid-cols-2">
                   {creator.phone && (
                     <div className="flex items-center gap-1.5">
                       <Phone size={13} className="text-emerald-700 shrink-0" />
@@ -429,6 +430,12 @@ export function ProfileDetailsModal({
                     <div className="flex items-center gap-1.5">
                       <Mail size={13} className="text-emerald-700 shrink-0" />
                       <span>{creator.email}</span>
+                    </div>
+                  )}
+                  {creator.gpayUpi && (
+                    <div className="flex items-center gap-1.5 sm:col-span-2">
+                      <span className="text-[10px] font-semibold text-emerald-800 uppercase">GPay / UPI</span>
+                      <span>{creator.gpayUpi}</span>
                     </div>
                   )}
                 </div>

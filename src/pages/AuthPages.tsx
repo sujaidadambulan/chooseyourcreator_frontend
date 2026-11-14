@@ -5,7 +5,7 @@ import { Button, Field, Logo, Notice, TextInput } from "../components/ui";
 import { Reveal } from "../components/motion";
 import { api, apiUrl, ApiError } from "../lib/api";
 import { consumeUrlError, formatApiError } from "../lib/errors";
-import { chosenRole, destinationFor, popOAuthError, useAuth, type SessionUser } from "../lib/auth";
+import { chosenRole, destinationFor, persistAuthToken, popOAuthError, useAuth, type SessionUser } from "../lib/auth";
 
 function AuthFrame({ title, subtitle, children }: { title: string; subtitle?: string; children: ReactNode }) {
   return (
@@ -159,7 +159,7 @@ function SignupOtpScreen({
         method: "POST",
         body: JSON.stringify({ email, code }),
       });
-      if (data.token) sessionStorage.setItem("cyc_token", data.token);
+      if (data.token) persistAuthToken(data.token);
       setUser(data.user);
       navigate(destinationFor(data.user));
     } catch (err) {
@@ -544,9 +544,6 @@ export function SignUpPage() {
         >
           Continue with Google
         </Button>
-        <Button variant="secondary" className="w-full" type="button" onClick={() => navigate("/phone")}>
-          Continue with phone
-        </Button>
       </div>
       <p className="text-center text-sm text-muted">
         <Link to="/sign-in">Sign in</Link>
@@ -582,7 +579,7 @@ export function SignInPage() {
         method: "POST",
         body: JSON.stringify({ email, password }),
       });
-      if (data.token) sessionStorage.setItem("cyc_token", data.token);
+      if (data.token) persistAuthToken(data.token);
       setUser(data.user);
       navigate(destinationFor(data.user));
     } catch (err) {
@@ -739,76 +736,3 @@ export function ResetPasswordPage() {
   );
 }
 
-// ─── Phone Page ───────────────────────────────────────────────────────────────
-
-export function PhonePage() {
-  const navigate = useNavigate();
-  const { setUser } = useAuth();
-  const [phone, setPhone] = useState("");
-  const [code, setCode] = useState("");
-  const [sent, setSent] = useState(false);
-  const [devCode, setDevCode] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  async function send(event: FormEvent) {
-    event.preventDefault();
-    setError(null);
-    try {
-      const data = await api<{ devCode?: string }>("/api/auth/phone/send", {
-        method: "POST",
-        body: JSON.stringify({ phone }),
-      });
-      setSent(true);
-      setDevCode(data.devCode ?? null);
-    } catch (err) {
-      setError(formatApiError(err));
-    }
-  }
-
-  async function verify(event: FormEvent) {
-    event.preventDefault();
-    setError(null);
-    try {
-      const data = await api<{ user: SessionUser; token?: string }>("/api/auth/phone/verify", {
-        method: "POST",
-        body: JSON.stringify({ phone, code, role: chosenRole() }),
-      });
-      if (data.token) sessionStorage.setItem("cyc_token", data.token);
-      setUser(data.user);
-      navigate(destinationFor(data.user));
-    } catch (err) {
-      setError(formatApiError(err));
-    }
-  }
-
-  return (
-    <AuthFrame title="Continue with phone">
-          <Notice message={error} variant="error" />
-      {!sent ? (
-        <form className="space-y-4" onSubmit={(event) => void send(event)}>
-          <Field label="Mobile number">
-            <TextInput
-              value={phone}
-              onChange={(event) => setPhone(event.target.value)}
-              placeholder="9876543210"
-              required
-            />
-          </Field>
-          <Button className="w-full" type="submit">Send code</Button>
-        </form>
-      ) : (
-        <form className="space-y-4" onSubmit={(event) => void verify(event)}>
-          {devCode ? <Notice message={`Development code: ${devCode}`} /> : null}
-          <Field label="6-digit code">
-            <TextInput
-              value={code}
-              onChange={(event) => setCode(event.target.value)}
-              required
-            />
-          </Field>
-          <Button className="w-full" type="submit">Verify</Button>
-        </form>
-      )}
-    </AuthFrame>
-  );
-}

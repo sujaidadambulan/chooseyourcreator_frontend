@@ -8,6 +8,7 @@ import {
   formatDate,
   formatInr,
   formatReferenceNumber,
+  normalizeGpayUpi,
   priceRangeLabel,
   resolveEffectiveAgreementStatus,
   statusLabel,
@@ -125,8 +126,8 @@ function socialFromProfile(profile: { socialPlatforms: string[]; socialLinks?: R
   return { platforms, links: profile.socialLinks ?? {}, ranges };
 }
 
-function readDraft(): { form: { name: string; city: string; niche: string; bio: string }; social: SocialDraft } {
-  const fallback = { form: { name: "", city: "", niche: "Lifestyle", bio: "" }, social: emptySocial() };
+function readDraft(): { form: { name: string; city: string; niche: string; bio: string; gpayUpi: string }; social: SocialDraft } {
+  const fallback = { form: { name: "", city: "", niche: "Lifestyle", bio: "", gpayUpi: "" }, social: emptySocial() };
   try {
     const raw = sessionStorage.getItem(DRAFT_KEY);
     if (!raw) return fallback;
@@ -140,19 +141,26 @@ function readDraft(): { form: { name: string; city: string; niche: string; bio: 
   }
 }
 
-function writeDraft(form: { name: string; city: string; niche: string; bio: string }, social: SocialDraft) {
+function writeDraft(
+  form: { name: string; city: string; niche: string; bio: string; gpayUpi: string },
+  social: SocialDraft,
+) {
   sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ form, social }));
 }
 
 function validateCreatorInput(
-  form: { name: string; city: string; niche: string; bio: string },
-  social: SocialDraft
+  form: { name: string; city: string; niche: string; bio: string; gpayUpi: string },
+  social: SocialDraft,
 ): Record<string, string> {
   const errors: Record<string, string> = {};
   if (!form.name.trim()) errors.name = "Please enter your name.";
   if (!form.city.trim()) errors.city = "Please enter your city.";
   if (!form.niche.trim()) errors.niche = "Please select a niche.";
   if (!form.bio.trim()) errors.bio = "Please write a short bio.";
+  if (!form.gpayUpi.trim()) errors.gpayUpi = "Enter your GPay or UPI number for payouts.";
+  else if (!normalizeGpayUpi(form.gpayUpi)) {
+    errors.gpayUpi = "Enter a valid UPI ID or 10-digit mobile number.";
+  }
 
   const activePlatforms = social.platforms.filter((p) => p !== "Other");
   if (activePlatforms.length === 0) {
@@ -215,6 +223,7 @@ export function CreatorOnboarding() {
           city: form.city.trim(),
           niche: form.niche,
           bio: form.bio.trim(),
+          gpayUpi: form.gpayUpi.trim(),
           socialPlatforms: social.platforms,
           socialLinks: social.links,
           followerRanges: social.ranges,
@@ -304,6 +313,23 @@ export function CreatorOnboarding() {
         </Field>
         {fieldErrors.bio ? (
           <p className="mt-1 text-xs text-rose-600 font-medium">{fieldErrors.bio}</p>
+        ) : null}
+      </div>
+      <div>
+        <Field label="GPay / UPI number *">
+          <TextInput
+            value={form.gpayUpi}
+            onChange={(event) => {
+              setForm({ ...form, gpayUpi: event.target.value });
+              if (fieldErrors.gpayUpi) setFieldErrors({ ...fieldErrors, gpayUpi: "" });
+            }}
+            placeholder="e.g. 9876543210 or name@okaxis"
+            required
+          />
+        </Field>
+        <p className="mt-1 text-xs text-muted">Used for payouts only. Not shown on your public profile.</p>
+        {fieldErrors.gpayUpi ? (
+          <p className="mt-1 text-xs text-rose-600 font-medium">{fieldErrors.gpayUpi}</p>
         ) : null}
       </div>
       <Button type="submit" disabled={saving}>
@@ -1785,6 +1811,7 @@ export function CreatorProfilePage() {
           socialLinks: Record<string, string>;
           followerCounts: Record<string, number>;
           followerRanges?: Record<string, string>;
+          gpayUpi?: string | null;
         };
       }>("/api/creator/profile"),
   });
@@ -1794,7 +1821,7 @@ export function CreatorProfilePage() {
   const [editing, setEditing] = useState(Boolean(connected || socialError));
   const [notice, setNotice] = useState<string | null>(connected ? `${connected} connected.` : socialError);
   const [social, setSocial] = useState<SocialDraft | null>(null);
-  const [form, setForm] = useState({ name: "", city: "", niche: "Lifestyle", bio: "" });
+  const [form, setForm] = useState({ name: "", city: "", niche: "Lifestyle", bio: "", gpayUpi: "" });
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [uploadingBanner, setUploadingBanner] = useState(false);
@@ -1804,7 +1831,13 @@ export function CreatorProfilePage() {
   useEffect(() => {
     const profile = query.data?.profile;
     if (!profile || !editing || social) return;
-    setForm({ name: profile.name, city: profile.city ?? "", niche: profile.niche, bio: profile.bio });
+    setForm({
+      name: profile.name,
+      city: profile.city ?? "",
+      niche: profile.niche,
+      bio: profile.bio,
+      gpayUpi: profile.gpayUpi ?? "",
+    });
     setSocial(socialFromProfile(profile));
   }, [editing, query.data, social]);
 
@@ -1858,7 +1891,13 @@ export function CreatorProfilePage() {
   }
 
   function beginEdit() {
-    setForm({ name: profile.name, city: profile.city ?? "", niche: profile.niche, bio: profile.bio });
+    setForm({
+      name: profile.name,
+      city: profile.city ?? "",
+      niche: profile.niche,
+      bio: profile.bio,
+      gpayUpi: profile.gpayUpi ?? "",
+    });
     setSocial(socialFromProfile(profile));
     setFieldErrors({});
     setEditing(true);
@@ -1902,7 +1941,7 @@ export function CreatorProfilePage() {
         </div>
 
         {/* Profile Card Header */}
-        <div className="relative flex items-end justify-between gap-4 -mt-12 px-3">
+        <div className="relative -mt-8 flex flex-col gap-4 px-3 sm:-mt-12 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex items-end gap-4">
             <div className="relative group">
               <div className="rounded-2xl border-4 border-white shadow-md bg-white overflow-hidden">
@@ -1919,10 +1958,18 @@ export function CreatorProfilePage() {
               <p className="text-xs text-muted">{profile.niche}{profile.city ? ` · ${profile.city}` : ""}</p>
             </div>
           </div>
-          <Button variant="secondary" onClick={beginEdit} className="text-xs">Edit Details</Button>
+          <Button variant="secondary" onClick={beginEdit} className="text-xs shrink-0 self-start sm:self-auto">
+            Edit Details
+          </Button>
         </div>
 
         <Notice message={notice} />
+        {profile.gpayUpi ? (
+          <Card className="text-sm">
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted">Payout details (private)</p>
+            <p className="mt-1 font-mono text-ink">{profile.gpayUpi}</p>
+          </Card>
+        ) : null}
         <p className="max-w-xl leading-7 text-sm text-ink/90 whitespace-pre-wrap">{profile.bio}</p>
 
         <div className="grid gap-3 sm:grid-cols-2">
@@ -2000,6 +2047,7 @@ export function CreatorProfilePage() {
             city: form.city.trim(),
             niche: form.niche,
             bio: form.bio.trim(),
+            gpayUpi: form.gpayUpi.trim(),
             socialPlatforms: social.platforms,
             socialLinks: social.links,
             followerRanges: social.ranges,
@@ -2072,6 +2120,23 @@ export function CreatorProfilePage() {
           </Field>
           {fieldErrors.bio ? (
             <p className="mt-1 text-xs text-rose-600 font-medium">{fieldErrors.bio}</p>
+          ) : null}
+        </div>
+        <div>
+          <Field label="GPay / UPI number *">
+            <TextInput
+              value={form.gpayUpi}
+              onChange={(event) => {
+                setForm({ ...form, gpayUpi: event.target.value });
+                if (fieldErrors.gpayUpi) setFieldErrors({ ...fieldErrors, gpayUpi: "" });
+              }}
+              placeholder="e.g. 9876543210 or name@okaxis"
+              required
+            />
+          </Field>
+          <p className="mt-1 text-xs text-muted">Used for payouts only. Not shown on your public profile.</p>
+          {fieldErrors.gpayUpi ? (
+            <p className="mt-1 text-xs text-rose-600 font-medium">{fieldErrors.gpayUpi}</p>
           ) : null}
         </div>
         {social ? (
