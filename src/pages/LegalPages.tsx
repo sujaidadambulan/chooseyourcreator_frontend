@@ -5,6 +5,7 @@ import { Logo, Button, Field, TextInput, Notice } from "../components/ui";
 import { Reveal } from "../components/motion";
 import { api } from "../lib/api";
 import { Footer } from "../components/Footer";
+import { BRAND } from "../shared";
 
 function LegalLayout({
   title,
@@ -446,7 +447,7 @@ export function ContactPage() {
             </a>
 
             <a
-              href="https://www.instagram.com/chooseyourcreator"
+              href={BRAND.instagramUrl}
               target="_blank"
               rel="noreferrer"
               className="flex items-start gap-4 rounded-3xl border border-line p-6 hover:border-ink/30 hover:bg-soft/40 transition-colors group"
@@ -456,7 +457,7 @@ export function ContactPage() {
               </div>
               <div>
                 <p className="font-semibold text-ink">Instagram</p>
-                <p className="text-sm text-muted mt-0.5">@chooseyourcreator</p>
+                <p className="text-sm text-muted mt-0.5">@{BRAND.instagramHandle}</p>
                 <div className="flex items-center gap-1 mt-2">
                   <span className="text-xs text-muted">Follow us</span>
                   <ExternalLink size={10} className="text-muted" />

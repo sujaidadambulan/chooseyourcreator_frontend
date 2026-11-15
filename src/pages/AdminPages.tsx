@@ -61,6 +61,7 @@ type AdminUser = {
     socialPlatforms: string[];
     isVerified?: boolean;
     onboardingComplete: boolean;
+    gpayUpi?: string | null;
   } | null;
 };
 
@@ -678,6 +679,7 @@ export function AdminDashboardPage() {
                         <th className="py-3 px-4 font-semibold">Role</th>
                         <th className="py-3 px-4 font-semibold">Email</th>
                         <th className="py-3 px-4 font-semibold text-emerald-800">Phone (Admin Only)</th>
+                        <th className="py-3 px-4 font-semibold text-emerald-800">GPay / UPI (Creators)</th>
                         <th className="py-3 px-4 font-semibold">Verification</th>
                         <th className="py-3 px-4 font-semibold">Account Status</th>
                         <th className="py-3 px-4 font-semibold">Joined</th>
@@ -687,7 +689,7 @@ export function AdminDashboardPage() {
                     <tbody className="divide-y divide-line">
                       {paginatedUsers.length === 0 ? (
                         <tr>
-                          <td colSpan={8} className="py-8 text-center text-muted">
+                          <td colSpan={9} className="py-8 text-center text-muted">
                             No users matched your search criteria.
                           </td>
                         </tr>
@@ -752,6 +754,14 @@ export function AdminDashboardPage() {
                                   <Phone size={12} className="text-emerald-700 shrink-0" />
                                   <span>{u.phone || "Not provided"}</span>
                                 </div>
+                              </td>
+
+                              <td className="py-3 px-4 font-mono bg-emerald-50/40 text-emerald-950 border-r border-emerald-200">
+                                {u.creatorProfile?.gpayUpi ? (
+                                  <span title="Creator payout UPI">{u.creatorProfile.gpayUpi}</span>
+                                ) : (
+                                  <span className="text-muted">—</span>
+                                )}
                               </td>
 
                               {/* Verification Toggle */}

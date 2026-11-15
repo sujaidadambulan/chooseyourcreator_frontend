@@ -379,5 +379,7 @@ export const BRAND = {
   name: "ChooseYourCreator",
   tagline: "Creator–Brand Collaboration Platform",
   adminEmail: "admin@chooseyourcreator.in",
+  instagramHandle: "chooseyourcreator.in",
+  instagramUrl: "https://www.instagram.com/chooseyourcreator.in",
   logoPath: "/brand/handshake_crayon_vector.svg",
 } as const;

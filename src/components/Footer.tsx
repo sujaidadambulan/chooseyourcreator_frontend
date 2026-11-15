@@ -18,13 +18,13 @@ export function Footer() {
               {BRAND.name} connects content creators and brands to build authentic collaborations and campaigns.
             </p>
             <a
-              href="https://www.instagram.com/chooseyourcreator"
+              href={BRAND.instagramUrl}
               target="_blank"
               rel="noreferrer"
               className="mt-4 inline-flex items-center gap-2 text-sm text-muted hover:text-ink transition-colors"
             >
               <Instagram size={16} className="text-rose-500" />
-              @chooseyourcreator
+              @{BRAND.instagramHandle}
             </a>
           </div>
 
@@ -96,13 +96,13 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://www.instagram.com/chooseyourcreator"
+                  href={BRAND.instagramUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 text-ink/80 hover:text-ink transition-colors"
                 >
                   <Instagram size={14} className="shrink-0 text-rose-500" />
-                  @chooseyourcreator
+                  @{BRAND.instagramHandle}
                 </a>
               </li>
             </ul>
