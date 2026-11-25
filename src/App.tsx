@@ -8,7 +8,7 @@ import { AgreementPage, CreatorCampaignDetail, CreatorHome, CreatorOnboarding, C
 import { LandingPage } from "./pages/Landing";
 import { MessagesPage } from "./pages/MessagesPage";
 import { AdminDashboardPage } from "./pages/AdminPages";
-import { PrivacyPolicyPage, TermsPage, ContactPage } from "./pages/LegalPages";
+import { PrivacyPolicyPage, TermsPage, RefundPolicyPage, ContactPage } from "./pages/LegalPages";
 import { AppErrorPage, NotFoundPage } from "./pages/ErrorPages";
 import type { ReactNode } from "react";
 
@@ -60,6 +60,8 @@ export function App() {
       <Route path="/admin" element={<Gate role="ADMIN"><AdminDashboardPage /></Gate>} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
       <Route path="/terms-and-conditions" element={<TermsPage />} />
+      <Route path="/refund-policy" element={<RefundPolicyPage />} />
+      <Route path="/refund-and-cancellation-policy" element={<RefundPolicyPage />} />
       <Route path="/contact" element={<ContactPage />} />
       <Route path="/error" element={<AppErrorPage />} />
       <Route path="*" element={<NotFoundPage />} />

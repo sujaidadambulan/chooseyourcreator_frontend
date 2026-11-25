@@ -65,6 +65,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link to="/refund-policy" className="text-ink/80 hover:text-ink transition-colors">
+                  Refund &amp; Cancellation
+                </Link>
+              </li>
+              <li>
                 <Link to="/contact" className="text-ink/80 hover:text-ink transition-colors">
                   Contact Us
                 </Link>
@@ -96,6 +101,15 @@ export function Footer() {
               </li>
               <li>
                 <a
+                  href="tel:+917510750667"
+                  className="inline-flex items-center gap-2 text-ink/80 hover:text-ink transition-colors"
+                >
+                  <Phone size={14} className="shrink-0" />
+                  +91 75107 50667
+                </a>
+              </li>
+              <li>
+                <a
                   href={BRAND.instagramUrl}
                   target="_blank"
                   rel="noreferrer"
@@ -113,12 +127,15 @@ export function Footer() {
           <p>
             &copy; {year} {BRAND.name}. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             <Link to="/privacy-policy" className="hover:text-ink transition-colors">
               Privacy
             </Link>
             <Link to="/terms-and-conditions" className="hover:text-ink transition-colors">
               Terms
+            </Link>
+            <Link to="/refund-policy" className="hover:text-ink transition-colors">
+              Refunds
             </Link>
             <Link to="/contact" className="hover:text-ink transition-colors">
               Contact

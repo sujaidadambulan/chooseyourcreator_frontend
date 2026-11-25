@@ -64,103 +64,127 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 export function PrivacyPolicyPage() {
   return (
-    <LegalLayout title="Privacy Policy" subtitle="Last updated: November 2024">
+    <LegalLayout title="Privacy Policy" subtitle="Last updated: November 2026">
       <p className="text-sm text-muted">
-        This Privacy Policy describes how ChooseYourCreator ("we", "us", or "our") collects, uses, and
-        protects your information when you use our platform.
+        This Privacy Policy describes how ChooseYourCreator ("we", "us", or "our") collects, uses, stores, and
+        protects your information when you use our platform at{" "}
+        <a
+          href="https://chooseyourcreator.in"
+          className="text-ink underline hover:no-underline"
+          target="_blank"
+          rel="noreferrer"
+        >
+          https://chooseyourcreator.in
+        </a>
+        .
       </p>
 
       <Section title="1. Information We Collect">
         <p>
-          <strong>Account information:</strong> When you create an account, we collect your name,
-          email address, and phone number. Brands additionally provide company name, niche, and
-          business description. Creators provide their bio, niche, city, and social platform details.
+          <strong>Account Information:</strong> When you create an account, we collect your name, email address,
+          and phone number. Brands may provide their business name, niche, and business description. Creators may
+          provide their bio, niche, city, and social media platform details.
         </p>
         <p>
-          <strong>Profile information:</strong> Profile photos, banner images, and social media links
-          you upload or provide.
+          <strong>Profile Information:</strong> We collect profile photos, banner images, portfolio materials, and
+          social media links that you upload or provide.
         </p>
         <p>
-          <strong>Usage data:</strong> We collect information about how you use our platform,
-          including pages visited and features used, to improve our service.
+          <strong>Usage Data:</strong> We may collect information about how you use our platform, including pages
+          visited and features used, to maintain and improve our services.
         </p>
         <p>
-          <strong>Communications:</strong> Messages exchanged between brands and creators on the
-          platform are stored to facilitate collaborations.
+          <strong>Communications:</strong> Messages exchanged between brands and creators through our platform
+          may be stored to facilitate collaborations and provide support.
+        </p>
+        <p>
+          <strong>Transaction Information:</strong> When payments are made through our platform, we may collect
+          transaction references, payment status, campaign payment details, and refund status. We do not intend to
+          store full debit or credit card details on our servers.
         </p>
       </Section>
 
       <Section title="2. How We Use Your Information">
-        <p>We use the information we collect to:</p>
+        <p>We use your information to:</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Provide, operate, and maintain the ChooseYourCreator platform</li>
-          <li>Match brands with suitable content creators</li>
-          <li>Facilitate communication between brands and creators</li>
-          <li>Send you verification codes and account-related notifications</li>
-          <li>Improve and personalize your experience on the platform</li>
-          <li>Respond to your support requests and inquiries</li>
-          <li>Comply with legal obligations</li>
+          <li>Provide, operate, and maintain ChooseYourCreator.</li>
+          <li>Match brands with suitable content creators.</li>
+          <li>Facilitate communication and campaign management.</li>
+          <li>Process and track campaign payments and creator payouts through supported payment service providers.</li>
+          <li>Send verification codes and account-related notifications.</li>
+          <li>Improve our services and user experience.</li>
+          <li>Respond to support requests and resolve disputes.</li>
+          <li>Comply with applicable legal obligations.</li>
         </ul>
       </Section>
 
       <Section title="3. Information Sharing">
-        <p>We do not sell, rent, or trade your personal information to third parties.</p>
+        <p>We do not sell or rent your personal information.</p>
         <p>
-          <strong>Between users:</strong> When a creator applies for a campaign or a brand invites a
-          creator, limited profile information (name, niche, follower counts, bio) is shared with
-          the other party to facilitate the collaboration. Contact details (phone number, email) are
-          kept confidential and are never displayed publicly.
+          <strong>Between Users:</strong> Limited profile information, such as name, niche, follower information,
+          bio, and portfolio details, may be shared with brands or creators to facilitate collaborations. Contact
+          details are not displayed publicly, although necessary information may be shared with the relevant party
+          when required to complete a collaboration or payment.
         </p>
         <p>
-          <strong>Service providers:</strong> We may share your information with trusted service
-          providers who assist us in operating our platform, subject to strict confidentiality
-          obligations.
+          <strong>Payment Service Providers:</strong> Payment and transaction information may be shared with
+          third-party payment service providers, such as Cashfree, when required to process payments, refunds,
+          verification, or creator payouts. Such providers handle information under their own applicable privacy
+          terms.
+        </p>
+        <p>
+          <strong>Service Providers:</strong> We may share necessary information with trusted providers who help us
+          operate our website, hosting, communications, and other platform services.
+        </p>
+        <p>
+          <strong>Legal Requirements:</strong> We may disclose information where required by applicable law or a
+          valid legal request.
         </p>
       </Section>
 
       <Section title="4. Data Storage and Security">
         <p>
-          Your data is stored on secure servers. We implement industry-standard security measures
-          including encrypted connections (HTTPS), hashed passwords, and session-based authentication
-          to protect your information.
+          We use reasonable security measures to protect personal information, including encrypted connections
+          (HTTPS) and appropriate safeguards for account credentials and platform data.
         </p>
         <p>
-          No method of transmission over the Internet is 100% secure. While we strive to protect
-          your data, we cannot guarantee absolute security.
+          No method of internet transmission or electronic storage is completely secure. We cannot guarantee
+          absolute security.
         </p>
       </Section>
 
       <Section title="5. Cookies and Session Data">
         <p>
-          ChooseYourCreator uses session cookies to keep you signed in and provide a seamless experience.
-          We do not use tracking or advertising cookies. We do not use third-party analytics services
-          that collect personal data.
-        </p>
-        <p>
-          Session cookies are essential for the platform to function and cannot be disabled while
-          using the service.
+          ChooseYourCreator uses essential session cookies to maintain login sessions and support platform
+          functionality. If additional cookies or analytics tools are introduced, this policy will be updated where
+          necessary.
         </p>
       </Section>
 
       <Section title="6. Payments">
         <p>
-          ChooseYourCreator does not process payments directly through the platform. Payment arrangements
-          between brands and creators are facilitated manually (via UPI, bank transfer, or other
-          methods agreed upon by both parties). We do not store payment card details or financial
-          account information.
+          Payments made through ChooseYourCreator are processed using supported third-party payment service providers.
+          These providers may collect and process payment information in accordance with their own privacy policies
+          and security practices.
+        </p>
+        <p>
+          We may retain transaction references, payment status, campaign payment records, refund information, and
+          payout records for platform operations, customer support, dispute resolution, and legal or accounting
+          requirements.
+        </p>
+        <p>
+          ChooseYourCreator does not intend to store full card numbers, CVV numbers, or other sensitive card
+          authentication credentials on its own servers.
         </p>
       </Section>
 
-      <Section title="7. Your Rights">
-        <p>You have the right to:</p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Access the personal information we hold about you</li>
-          <li>Request correction of inaccurate information</li>
-          <li>Request deletion of your account and associated data</li>
-          <li>Withdraw consent where processing is based on consent</li>
-        </ul>
+      <Section title="7. Your Privacy Rights">
         <p>
-          To exercise these rights, contact us at{" "}
+          Subject to applicable law, you may request access to your personal information, correction of inaccurate
+          information, deletion of eligible personal information, or withdrawal of consent where applicable.
+        </p>
+        <p>
+          To make a request, contact{" "}
           <a href="mailto:admin@chooseyourcreator.in" className="text-ink underline hover:no-underline">
             admin@chooseyourcreator.in
           </a>
@@ -170,27 +194,50 @@ export function PrivacyPolicyPage() {
 
       <Section title="8. Children's Privacy">
         <p>
-          ChooseYourCreator is not intended for use by individuals under the age of 18. We do not
-          knowingly collect personal information from minors. If you believe a minor has provided us
-          with personal information, please contact us immediately.
+          ChooseYourCreator is intended for individuals aged 18 and above. We do not knowingly collect personal
+          information from individuals under 18. Please contact us if you believe a minor has provided personal
+          information.
         </p>
       </Section>
 
       <Section title="9. Changes to This Policy">
         <p>
-          We may update this Privacy Policy from time to time. We will notify registered users of
-          significant changes by email. Continued use of the platform after changes constitutes
-          acceptance of the updated policy.
+          We may update this Privacy Policy when our services or practices change. Updated versions will be
+          published on this page with a revised date. Where required, we will notify users of significant changes.
         </p>
       </Section>
 
       <Section title="10. Contact Us">
-        <p>For privacy-related questions, contact us at:</p>
-        <p>
-          <a href="mailto:admin@chooseyourcreator.in" className="text-ink underline">
-            admin@chooseyourcreator.in
-          </a>
-        </p>
+        <p>For privacy-related questions or requests, contact:</p>
+        <div className="space-y-1 text-sm text-ink/80">
+          <p>
+            Email:{" "}
+            <a href="mailto:admin@chooseyourcreator.in" className="text-ink underline hover:no-underline">
+              admin@chooseyourcreator.in
+            </a>
+          </p>
+          <p>
+            Phone:{" "}
+            <a href="tel:+918129747764" className="text-ink underline hover:no-underline">
+              +91 81297 47764
+            </a>
+            ,{" "}
+            <a href="tel:+917510750667" className="text-ink underline hover:no-underline">
+              +91 75107 50667
+            </a>
+          </p>
+          <p>
+            Website:{" "}
+            <a
+              href="https://chooseyourcreator.in"
+              className="text-ink underline hover:no-underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              https://chooseyourcreator.in
+            </a>
+          </p>
+        </div>
       </Section>
     </LegalLayout>
   );
@@ -200,150 +247,282 @@ export function PrivacyPolicyPage() {
 
 export function TermsPage() {
   return (
-    <LegalLayout title="Terms &amp; Conditions" subtitle="Last updated: November 2024">
+    <LegalLayout title="Terms &amp; Conditions" subtitle="Last updated: November 2026">
       <p className="text-sm text-muted">
-        Please read these Terms and Conditions carefully before using the ChooseYourCreator platform. By
-        accessing or using our service, you agree to be bound by these terms.
+        Please read these Terms and Conditions carefully before using ChooseYourCreator. By accessing or using our
+        platform, you agree to these terms and our Privacy Policy.
       </p>
 
       <Section title="1. About ChooseYourCreator">
         <p>
-          ChooseYourCreator is an early-stage startup operating as a platform that connects content
-          creators with brands for collaboration purposes. ChooseYourCreator is not currently registered
-          as a legal entity. These terms represent our commitment to users while the platform is in
-          development.
+          ChooseYourCreator is an early-stage online platform that connects brands with content creators for
+          promotional collaborations and campaigns. The platform facilitates campaign discovery, communication,
+          payments, and campaign management.
+        </p>
+        <p>
+          ChooseYourCreator is currently operated by an individual and is not represented as a registered Private
+          Limited Company or LLP. The operator's applicable legal details will be provided where required.
         </p>
       </Section>
 
-      <Section title="2. Acceptance of Terms">
+      <Section title="2. Acceptance and Eligibility">
         <p>
-          By creating an account or using the ChooseYourCreator platform, you agree to these Terms and
-          Conditions and our Privacy Policy. If you do not agree, please do not use our platform.
+          By creating an account or using ChooseYourCreator, you agree to these Terms and our Privacy Policy. Users
+          must be at least 18 years old. You must provide accurate information and have the authority to act on behalf
+          of any business you represent.
         </p>
-        <p>You must be at least 18 years old to use ChooseYourCreator.</p>
       </Section>
 
       <Section title="3. User Accounts">
         <p>
-          You are responsible for maintaining the confidentiality of your account credentials. You
-          agree to:
+          You are responsible for maintaining the confidentiality of your login credentials and for activity under
+          your account. You agree to provide accurate information, keep your details updated, avoid sharing your
+          account, and notify us of unauthorized access.
         </p>
-        <ul className="list-disc pl-5 space-y-1">
-          <li>Provide accurate and truthful information when creating your profile</li>
-          <li>Keep your contact information up to date</li>
-          <li>Not share your account with others</li>
-          <li>Notify us immediately of any unauthorized use of your account</li>
-        </ul>
       </Section>
 
       <Section title="4. Brand Responsibilities">
-        <p>Brands using ChooseYourCreator agree to:</p>
+        <p>Brands agree to:</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Post accurate campaign details including deliverables, timelines, and payment amounts</li>
-          <li>Treat creators respectfully and professionally</li>
-          <li>Honor payment commitments made to creators upon accepting their collaboration</li>
-          <li>Not misrepresent their brand, products, or campaign requirements</li>
+          <li>Provide accurate campaign briefs, deliverables, timelines, and product information.</li>
+          <li>Make campaign payments through the available payment methods on the platform.</li>
+          <li>Provide clear and reasonable feedback within the agreed campaign requirements.</li>
+          <li>Review submitted content within a reasonable time.</li>
+          <li>Treat creators respectfully and professionally.</li>
+          <li>Avoid misleading campaign requirements or unlawful promotional activities.</li>
         </ul>
       </Section>
 
       <Section title="5. Creator Responsibilities">
-        <p>Creators using ChooseYourCreator agree to:</p>
+        <p>Creators agree to:</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Provide accurate information about their audience size and social media reach</li>
-          <li>Deliver campaign content as agreed within the specified timeline</li>
-          <li>
-            Disclose sponsored content in accordance with applicable advertising regulations
-          </li>
-          <li>Not misrepresent their follower counts or engagement metrics</li>
+          <li>Provide accurate profile, audience, and social media information.</li>
+          <li>Complete accepted campaign deliverables within the agreed timeline.</li>
+          <li>Follow the campaign brief and agreed content requirements.</li>
+          <li>Ensure that submitted content does not infringe third-party rights.</li>
+          <li>Disclose sponsored content in accordance with applicable advertising requirements.</li>
+          <li>Avoid false follower counts, engagement figures, or performance claims.</li>
         </ul>
       </Section>
 
-      <Section title="6. Payments">
+      <Section title="6. Payments and Creator Payouts">
         <p>
-          ChooseYourCreator does not process or handle payments between brands and creators. All payment
-          arrangements are made directly between the parties involved. ChooseYourCreator provides tools to
-          track and document payment agreements, but is not a party to any financial transaction.
+          Brands make campaign payments to ChooseYourCreator through the payment methods and payment service
+          providers supported on the platform.
         </p>
         <p>
-          ChooseYourCreator is not responsible for payment disputes between brands and creators. We
-          strongly encourage both parties to agree on clear payment terms before beginning any
-          collaboration.
-        </p>
-      </Section>
-
-      <Section title="7. Content and Intellectual Property">
-        <p>
-          By uploading content to ChooseYourCreator (profile photos, banner images, portfolio work), you
-          grant ChooseYourCreator a non-exclusive, royalty-free license to display that content on the
-          platform.
+          ChooseYourCreator facilitates the payment process and arranges creator payouts according to the applicable
+          campaign terms and completion status.
         </p>
         <p>
-          You retain ownership of your content. You represent that you have the right to upload and
-          share any content you post on our platform.
+          Creator payouts are subject to campaign completion, verification, applicable payment-provider procedures, and
+          any required KYC checks.
         </p>
         <p>
-          Campaign content created by creators for brands remains subject to any intellectual
-          property agreements made between the brand and creator directly.
+          ChooseYourCreator may charge a platform commission or service fee, which will be communicated to the relevant
+          users before payment where applicable.
+        </p>
+        <p>
+          Payment processing and payout timelines may depend on the payment provider, banks, verification
+          requirements, and other applicable procedures.
         </p>
       </Section>
 
-      <Section title="8. Prohibited Conduct">
-        <p>You agree not to:</p>
+      <Section title="7. Content Revisions">
+        <p>
+          Brands are entitled to a maximum of three rounds of content revisions per campaign. Revision requests must
+          remain within the original campaign brief and agreed deliverables. No additional revision rounds are included
+          or permitted through the standard campaign arrangement.
+        </p>
+      </Section>
+
+      <Section title="8. Refunds and Cancellations">
+        <p>
+          If a creator does not complete the agreed campaign deliverables, the brand is eligible for a 100% refund of
+          the campaign payment, subject to verification of the campaign status.
+        </p>
+        <p>
+          Campaign cancellation and refund requests will be handled according to our{" "}
+          <Link to="/refund-policy" className="text-ink underline hover:no-underline">
+            Refund &amp; Cancellation Policy
+          </Link>
+          , which forms part of these Terms.
+        </p>
+      </Section>
+
+      <Section title="9. Content and Intellectual Property">
+        <p>
+          Users retain ownership of content they upload, subject to rights held by third parties. By uploading
+          profile images, portfolio materials, or other content, users grant ChooseYourCreator a non-exclusive licence
+          to display that material as necessary to operate and promote the platform.
+        </p>
+        <p>
+          Ownership and permitted use of campaign content must be agreed between the brand and creator. Neither party
+          should assume that content ownership automatically transfers unless agreed in writing.
+        </p>
+      </Section>
+
+      <Section title="10. Prohibited Conduct">
+        <p>Users must not:</p>
         <ul className="list-disc pl-5 space-y-1">
-          <li>Post false, misleading, or fraudulent information</li>
-          <li>Harass, threaten, or abuse other users</li>
-          <li>Attempt to gain unauthorized access to the platform or other users' accounts</li>
-          <li>Use the platform to promote illegal activities</li>
-          <li>Create multiple accounts to circumvent suspensions or restrictions</li>
+          <li>Provide false, misleading, or fraudulent information.</li>
+          <li>Harass, threaten, or abuse other users.</li>
+          <li>Attempt unauthorized access to accounts or platform systems.</li>
+          <li>Use the platform for unlawful activities.</li>
+          <li>Manipulate campaign records, payments, or engagement statistics.</li>
+          <li>Infringe intellectual property or third-party rights.</li>
         </ul>
       </Section>
 
-      <Section title="9. Platform Availability">
+      <Section title="11. Platform Availability">
         <p>
-          As an early-stage platform, ChooseYourCreator may experience downtime, bugs, or service
-          interruptions. We do not guarantee uninterrupted access to the platform. We reserve the
-          right to modify, suspend, or discontinue any part of the service at any time.
+          ChooseYourCreator is an early-stage service. We may experience downtime, bugs, maintenance periods, or
+          interruptions. We will make reasonable efforts to maintain the service but do not guarantee uninterrupted
+          availability.
         </p>
       </Section>
 
-      <Section title="10. Limitation of Liability">
+      <Section title="12. Limitation of Liability">
         <p>
-          To the maximum extent permitted by applicable law, ChooseYourCreator shall not be liable for any
-          indirect, incidental, special, or consequential damages arising from your use of the
-          platform, including but not limited to disputes between brands and creators, failed
-          collaborations, or payment disagreements.
+          To the extent permitted by applicable law, ChooseYourCreator is not responsible for indirect or consequential
+          losses arising from platform use, user conduct, social media platform changes, or disagreements between
+          brands and creators. Nothing in these Terms excludes liability that cannot legally be excluded.
         </p>
       </Section>
 
-      <Section title="11. Account Termination">
+      <Section title="13. Account Suspension and Termination">
         <p>
-          ChooseYourCreator reserves the right to suspend or terminate accounts that violate these terms.
-          If your account is suspended, you may contact us to appeal the decision.
+          We may restrict or suspend accounts that violate these Terms, engage in fraudulent activity, or create risks
+          for other users or the platform. Users may request account deletion by contacting our support team, subject
+          to applicable legal and transaction-record retention requirements.
         </p>
+      </Section>
+
+      <Section title="14. Changes to These Terms">
         <p>
-          You may delete your account at any time by contacting us at{" "}
-          <a href="mailto:admin@chooseyourcreator.in" className="text-ink underline">
+          We may update these Terms when our platform or services change. Updated versions will be published on our
+          website with a revised date. Where required, users will be notified of significant changes.
+        </p>
+      </Section>
+
+      <Section title="15. Contact Us">
+        <p>For questions or assistance, contact:</p>
+        <div className="space-y-1 text-sm text-ink/80">
+          <p>
+            Email:{" "}
+            <a href="mailto:admin@chooseyourcreator.in" className="text-ink underline hover:no-underline">
+              admin@chooseyourcreator.in
+            </a>
+          </p>
+          <p>
+            Phone:{" "}
+            <a href="tel:+918129747764" className="text-ink underline hover:no-underline">
+              +91 81297 47764
+            </a>
+            ,{" "}
+            <a href="tel:+917510750667" className="text-ink underline hover:no-underline">
+              +91 75107 50667
+            </a>
+          </p>
+          <p>
+            Website:{" "}
+            <a
+              href="https://chooseyourcreator.in"
+              className="text-ink underline hover:no-underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              https://chooseyourcreator.in
+            </a>
+          </p>
+        </div>
+      </Section>
+    </LegalLayout>
+  );
+}
+
+// ─── Refund & Cancellation Policy ─────────────────────────────────────────────
+
+export function RefundPolicyPage() {
+  return (
+    <LegalLayout title="Refund &amp; Cancellation Policy" subtitle="Last updated: November 2026">
+      <p className="text-sm text-muted">
+        ChooseYourCreator aims to provide a fair and transparent collaboration experience for brands and creators.
+      </p>
+
+      <Section title="1. Campaign Completion and Refunds">
+        <p>
+          If a creator does not complete the agreed campaign deliverables, the brand is eligible for a 100% refund of
+          the campaign payment. Refund eligibility will be verified by reviewing the campaign details and its
+          completion status.
+        </p>
+      </Section>
+
+      <Section title="2. Content Revisions">
+        <p>
+          Brands are entitled to a maximum of three rounds of content revisions for each campaign. Revision requests
+          must relate to the original campaign brief and agreed deliverables. Additional revision rounds are not
+          permitted.
+        </p>
+      </Section>
+
+      <Section title="3. Campaign Cancellation">
+        <p>
+          Brands may submit a cancellation request through ChooseYourCreator. Refund eligibility will be determined
+          according to the campaign status and the terms of this policy. If the campaign is not completed as agreed,
+          the brand is eligible for a full refund.
+        </p>
+      </Section>
+
+      <Section title="4. Refund Processing">
+        <p>
+          Approved refunds will be initiated through the original payment method wherever supported. The time taken
+          for the refund to appear in the brand's account depends on the payment provider and the bank.
+        </p>
+      </Section>
+
+      <Section title="5. How to Request a Refund">
+        <p>
+          Brands can contact our support team at{" "}
+          <a href="mailto:admin@chooseyourcreator.in" className="text-ink underline hover:no-underline">
             admin@chooseyourcreator.in
-          </a>
-          .
+          </a>{" "}
+          with their campaign details and payment reference. Our team will review the request and communicate the
+          outcome.
         </p>
       </Section>
 
-      <Section title="12. Changes to Terms">
-        <p>
-          We may update these terms from time to time. We will notify registered users of significant
-          changes via email. Continued use of the platform constitutes acceptance of updated terms.
-        </p>
-      </Section>
-
-      <Section title="13. Contact">
-        <p>
-          For questions about these Terms, contact us at{" "}
-          <a href="mailto:admin@chooseyourcreator.in" className="text-ink underline">
-            admin@chooseyourcreator.in
-          </a>
-          .
-        </p>
+      <Section title="6. Contact Us">
+        <p>For questions or assistance regarding refunds and cancellations, contact:</p>
+        <div className="space-y-1 text-sm text-ink/80">
+          <p>
+            Email:{" "}
+            <a href="mailto:admin@chooseyourcreator.in" className="text-ink underline hover:no-underline">
+              admin@chooseyourcreator.in
+            </a>
+          </p>
+          <p>
+            Phone:{" "}
+            <a href="tel:+918129747764" className="text-ink underline hover:no-underline">
+              +91 81297 47764
+            </a>
+            ,{" "}
+            <a href="tel:+917510750667" className="text-ink underline hover:no-underline">
+              +91 75107 50667
+            </a>
+          </p>
+          <p>
+            Website:{" "}
+            <a
+              href="https://chooseyourcreator.in"
+              className="text-ink underline hover:no-underline"
+              target="_blank"
+              rel="noreferrer"
+            >
+              https://chooseyourcreator.in
+            </a>
+          </p>
+        </div>
       </Section>
     </LegalLayout>
   );
@@ -432,19 +611,24 @@ export function ContactPage() {
               </div>
             </a>
 
-            <a
-              href="tel:+918129747764"
-              className="flex items-start gap-4 rounded-3xl border border-line p-6 hover:border-ink/30 hover:bg-soft/40 transition-colors group"
-            >
+            <div className="flex items-start gap-4 rounded-3xl border border-line p-6 hover:border-ink/30 hover:bg-soft/40 transition-colors group">
               <div className="rounded-2xl bg-soft p-3 group-hover:bg-ink/5 transition-colors">
                 <Phone size={22} className="text-ink" />
               </div>
               <div>
                 <p className="font-semibold text-ink">Phone</p>
-                <p className="text-sm text-muted mt-0.5">+91 81297 47764</p>
+                <div className="text-sm text-muted mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                  <a href="tel:+918129747764" className="hover:text-ink transition-colors">
+                    +91 81297 47764
+                  </a>
+                  <span>/</span>
+                  <a href="tel:+917510750667" className="hover:text-ink transition-colors">
+                    +91 75107 50667
+                  </a>
+                </div>
                 <p className="text-xs text-muted mt-2">Monday – Saturday, 10 AM – 6 PM IST</p>
               </div>
-            </a>
+            </div>
 
             <a
               href={BRAND.instagramUrl}

@@ -408,7 +408,6 @@ export function RolePage() {
 // ─── Sign Up Page ─────────────────────────────────────────────────────────────
 
 export function SignUpPage() {
-  const navigate = useNavigate();
   const { setUser: _setUser } = useAuth();
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
